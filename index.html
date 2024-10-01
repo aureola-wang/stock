@@ -1,1 +1,72 @@
 
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国A股股票分析</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: center;
+        }
+        td {
+            text-align: center;
+        }
+        .loading {
+            text-align: center;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <h1>中国A股股票分析</h1>
+    <div id="stock-data" class="loading">正在加载股票数据，请稍候...</div>
+
+    <script>
+        // 从 JSON 文件中获取股票数据
+        fetch('data/stock_data.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('网络错误');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // 动态生成股票数据表格
+                let content = "<table><tr><th>日期</th><th>开盘价</th><th>收盘价</th><th>最高价</th><th>最低价</th></tr>";
+                data.forEach(stock => {
+                    content += `<tr>
+                        <td>${stock.trade_date}</td>
+                        <td>${stock.open}</td>
+                        <td>${stock.close}</td>
+                        <td>${stock.high}</td>
+                        <td>${stock.low}</td>
+                    </tr>`;
+                });
+                content += "</table>";
+                document.getElementById('stock-data').innerHTML = content;
+            })
+            .catch(error => {
+                document.getElementById('stock-data').innerHTML = '无法加载股票数据。';
+                console.error('Error fetching stock data:', error);
+            });
+    </script>
+</body>
+</html>
