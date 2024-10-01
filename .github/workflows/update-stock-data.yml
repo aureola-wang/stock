@@ -16,21 +16,20 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x'
+          python-version: '3.x'  # 使用最新的 Python 版本
 
       - name: Install dependencies
-        run: |
-          pip install tushare
+        run: pip install tushare  # 安装 Tushare 库
 
       - name: Run stock data script
         env:
-          TUSHARE_API_TOKEN: ${{ secrets.TUSHARE_API_TOKEN }}  # 使用 Secrets 中的 API Token
-        run: python get_stock_data.py
+          TUSHARE_API_TOKEN: ${{ secrets.TUSHARE_API_TOKEN }}  # 从 Secrets 中获取 API Token
+        run: python get_stock_data.py  # 运行获取数据的 Python 脚本
 
       - name: Commit and push updated stock data
         run: |
-          git config --local user.email "aureola.wang@gmail.com"  # 替换为你的邮箱
+          git config --local user.email "you@example.com"  # 替换为你的邮箱
           git config --local user.name "GitHub Actions"
-          git add stock_data.json  # 将 JSON 文件添加到 Git
-          git commit -m "Update stock data" || echo "No changes to commit"
-          git push origin main
+          git add stock_data.json  # 添加更新后的 JSON 文件
+          git commit -m "Update stock data" || echo "No changes to commit"  # 如果没有更改则不会失败
+          git push origin main  # 推送更改到主分支
