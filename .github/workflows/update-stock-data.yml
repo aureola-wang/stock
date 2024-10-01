@@ -27,7 +27,7 @@ jobs:
 
       - name: Commit and push updated stock data
         run: |
-          git config --local user.email "you@example.com"  # 替换为你的邮箱
+          git config --local user.email "aureola.wang@gmail.com"  # 替换为你的邮箱
           git config --local user.name "GitHub Actions"
           git add stock_data.json  # 将 JSON 文件添加到 Git
           git commit -m "Update stock data"
